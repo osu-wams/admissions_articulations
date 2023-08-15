@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
  * @FieldWidget(
  *   id = "articulations_table_widget",
  *   label = @Translation("Articulations Table"),
- *   field_types = {"admissions_articulations_link"},
+ *   field_types = {"articulations_table"},
  * )
  */
 class ArticulationsTableWidget extends WidgetBase {

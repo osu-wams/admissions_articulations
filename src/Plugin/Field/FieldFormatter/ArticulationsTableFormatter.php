@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "articulations_table_formatter",
  *   label = @Translation("Articulations Table"),
  *   field_types = {
- *     "admissions_articulations_link"
+ *     "articulations_table"
  *   }
  * )
  */

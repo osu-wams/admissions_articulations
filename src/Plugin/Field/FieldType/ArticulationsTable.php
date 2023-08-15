@@ -10,7 +10,7 @@ use Drupal\Core\TypedData\DataDefinition;
  * Defines the 'admissions_articulations_link' field type.
  *
  * @FieldType(
- *   id = "admissions_articulations_link",
+ *   id = "articulations_table",
  *   label = @Translation("Articulations Table"),
  *   category = @Translation("General"),
  *   default_widget = "string_textfield",
@@ -46,7 +46,7 @@ class ArticulationsTable extends FieldItemBase {
         'type' => 'varchar',
         'not null' => FALSE,
         'description' => 'URL of a articulations table.',
-        'length' => 255,
+        'length' => 2048,
       ],
     ];
 

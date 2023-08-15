@@ -1,4 +1,4 @@
-field.value.admissions_articulations_link:
+field.value.articulations_table:
   type: mapping
   label: Default value
   mapping:
