@@ -30,23 +30,36 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
    *
    * @var \GuzzleHttp\ClientInterface
    */
-  private ClientInterface $http_client;
+  private ClientInterface $httpClient;
 
   /**
+   * Logger Factory.
+   *
    * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
   private LoggerChannelFactoryInterface $logger;
 
   /**
-   * @param $plugin_id
-   * @param $plugin_definition
+   * Constructs an Articulations Table Formatter.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
    * @param array $settings
-   * @param $label
-   * @param $view_mode
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
    * @param array $third_party_settings
+   *   Any third party settings.
    * @param \GuzzleHttp\ClientInterface $http_client
+   *   The Guzzle HTTP Client interface.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
+   *   The Logger Factory Interface.
    */
   public function __construct($plugin_id,
     $plugin_definition,
@@ -58,7 +71,7 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-    $this->http_client = $http_client;
+    $this->httpClient = $http_client;
     $this->logger = $logger;
   }
 
@@ -98,12 +111,15 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
    * Fetch the Articulations Table.
    *
    * @param string $articulationsUrl
+   *   URL to the Articulations Table.
    *
    * @return string
+   *   Either the data from the Articulations source or a message that it's
+   *   not working.
    */
   protected function getArticulationsTable(string $articulationsUrl): string {
     try {
-      $request = $this->http_client->request('GET', $articulationsUrl);
+      $request = $this->httpClient->request('GET', $articulationsUrl);
       if (in_array($request->getStatusCode(), [200, 301, 302])) {
         $response_body = $request->getBody();
         return Xss::filter($response_body, ['pre']);
