@@ -2,6 +2,7 @@
 
 namespace Drupal\admissions_articulations\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\Annotation\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -17,11 +18,6 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "string"
  * )
  *
- * @DCG
- * If you are implementing a single value field type you may want to inherit
- * this class form some of the field type classes provided by Drupal core.
- * Check out /core/lib/Drupal/Core/Field/Plugin/Field/FieldType directory for a
- * list of available field type implementations.
  */
 class ArticulationsTable extends FieldItemBase {
 
