@@ -2,23 +2,22 @@
 
 namespace Drupal\admissions_articulations\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\Annotation\FieldType;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'admissions_articulations_link' field type.
- *
- * @FieldType(
- *   id = "articulations_table",
- *   label = @Translation("Articulations Table"),
- *   category = @Translation("General"),
- *   default_widget = "string_textfield",
- *   default_formatter = "string"
- * )
- *
  */
+#[FieldType(
+  id: "articulations_table",
+  label: new TranslatableMarkup("Articulations Table"),
+  category: new TranslatableMarkup("General"),
+  default_widget: "string_textfield",
+  default_formatter: "string",
+)]
 class ArticulationsTable extends FieldItemBase {
 
   /**
