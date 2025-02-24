@@ -3,6 +3,7 @@
 namespace Drupal\admissions_articulations\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Field\Annotation\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -69,7 +70,8 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
     $view_mode,
     array $third_party_settings,
     ClientInterface $http_client,
-    LoggerChannelFactoryInterface $logger) {
+    LoggerChannelFactoryInterface $logger
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->httpClient = $http_client;
     $this->logger = $logger;
@@ -119,7 +121,10 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
    */
   protected function getArticulationsTable(string $articulationsUrl): string {
     try {
-      $request = $this->httpClient->request('GET', $articulationsUrl);
+      $request = $this->httpClient->request('GET', $articulationsUrl, [
+        'connect_timeout' => 3,
+        'timeout' => 5,
+      ]);
       if (in_array($request->getStatusCode(), [200, 301, 302])) {
         $response_body = $request->getBody();
         return Xss::filter($response_body, ['pre']);
