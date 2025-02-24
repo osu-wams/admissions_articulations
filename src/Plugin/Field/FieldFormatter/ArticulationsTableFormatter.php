@@ -3,26 +3,27 @@
 namespace Drupal\admissions_articulations\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'Articulations Link' formatter.
- *
- * @FieldFormatter(
- *   id = "articulations_table_formatter",
- *   label = @Translation("Articulations Table"),
- *   field_types = {
- *     "articulations_table"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: "articulations_table_formatter",
+  label: new TranslatableMarkup("Articulations Table"),
+  field_types: [
+    "articulations_table",
+  ],
+)]
 class ArticulationsTableFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -61,7 +62,8 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
    *   The Logger Factory Interface.
    */
-  public function __construct($plugin_id,
+  public function __construct(
+    $plugin_id,
     $plugin_definition,
     FieldDefinitionInterface $field_definition,
     array $settings,
@@ -69,7 +71,8 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
     $view_mode,
     array $third_party_settings,
     ClientInterface $http_client,
-    LoggerChannelFactoryInterface $logger) {
+    LoggerChannelFactoryInterface $logger,
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->httpClient = $http_client;
     $this->logger = $logger;
@@ -119,7 +122,10 @@ class ArticulationsTableFormatter extends FormatterBase implements ContainerFact
    */
   protected function getArticulationsTable(string $articulationsUrl): string {
     try {
-      $request = $this->httpClient->request('GET', $articulationsUrl);
+      $request = $this->httpClient->request('GET', $articulationsUrl, [
+        'connect_timeout' => 3,
+        'timeout' => 5,
+      ]);
       if (in_array($request->getStatusCode(), [200, 301, 302])) {
         $response_body = $request->getBody();
         return Xss::filter($response_body, ['pre']);

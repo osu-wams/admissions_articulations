@@ -2,19 +2,20 @@
 
 namespace Drupal\admissions_articulations\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the 'admissions_articulations_field_widget' field widget.
- *
- * @FieldWidget(
- *   id = "articulations_table_widget",
- *   label = @Translation("Articulations Table"),
- *   field_types = {"articulations_table"},
- * )
  */
+#[FieldWidget(
+  id: "articulations_table_widget",
+  label: new TranslatableMarkup("Articulations Table"),
+  field_types: ["articulations_table"],
+)]
 class ArticulationsTableWidget extends WidgetBase {
 
   /**

@@ -2,27 +2,22 @@
 
 namespace Drupal\admissions_articulations\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'admissions_articulations_link' field type.
- *
- * @FieldType(
- *   id = "articulations_table",
- *   label = @Translation("Articulations Table"),
- *   category = @Translation("General"),
- *   default_widget = "string_textfield",
- *   default_formatter = "string"
- * )
- *
- * @DCG
- * If you are implementing a single value field type you may want to inherit
- * this class form some of the field type classes provided by Drupal core.
- * Check out /core/lib/Drupal/Core/Field/Plugin/Field/FieldType directory for a
- * list of available field type implementations.
  */
+#[FieldType(
+  id: "articulations_table",
+  label: new TranslatableMarkup("Articulations Table"),
+  category: new TranslatableMarkup("General"),
+  default_widget: "string_textfield",
+  default_formatter: "string",
+)]
 class ArticulationsTable extends FieldItemBase {
 
   /**
@@ -52,7 +47,6 @@ class ArticulationsTable extends FieldItemBase {
 
     $schema = [
       'columns' => $columns,
-      // @DCG Add indexes here if necessary.
     ];
 
     return $schema;
