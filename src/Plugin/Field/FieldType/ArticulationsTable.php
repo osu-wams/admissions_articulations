@@ -47,7 +47,6 @@ class ArticulationsTable extends FieldItemBase {
 
     $schema = [
       'columns' => $columns,
-      // @DCG Add indexes here if necessary.
     ];
 
     return $schema;
